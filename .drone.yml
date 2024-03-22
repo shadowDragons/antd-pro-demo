@@ -1,0 +1,35 @@
+kind: pipeline
+type: docker
+name: default
+steps:
+    - name: build
+      image: node:16
+      commands:
+          - npm cache clean --force
+          - npm config set fetch-retries 100
+          - npm config set fetch-retry-mintimeout 20000
+          - npm i --force
+          - npm run build:test
+    - name: upload
+      image: appleboy/drone-scp
+      settings:
+          host: 45.125.34.94
+          username: pincman
+          key:
+              from_secret: ssh_key
+          port: 22
+          command_timeout: 2m
+          target: /tmp/kuromi-admin
+          source:
+              - ./dist
+    - name: deploy
+      image: appleboy/drone-ssh
+      settings:
+          host: 45.125.34.94
+          username: pincman
+          key:
+              from_secret: ssh_key
+          port: 22
+          script:
+              - rm -rf /home/pincman/htdocs/kuromi/admin
+              - mv /tmp/kuromi-admin/dist /home/pincman/htdocs/kuromi/admin && rm -rf /tmp/kuromi-admin

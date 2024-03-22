@@ -1,0 +1,52 @@
+ <div className={classnames({ 'tw-hidden': tabType == '2' },'editor')}>
+                <ProFormGroup title="文章基本信息(CN)">
+                    <ProFormTextArea label="文章标题(CN)" width={800} name="title" />
+                    <ProFormTextArea label="文章简介(CN)" width={800} name="summary" />
+                    <div className="text-editor tw-w-full editor">
+                        {/* <CustomToolbar /> */}
+                        <ReactQuill
+                            theme="snow"
+                            ref={quillRef}
+                            value={description}
+                            modules={modules}
+                            onChange={setDescription}
+                            className="ReactQuill tw-w-full"
+                        />
+                    </div>
+                </ProFormGroup>
+            </div>
+            <div className={classnames({ 'tw-hidden': tabType === '1' },'tw-w-full editor')}>
+                {' '}
+                <ProFormGroup title="文章基本信息(EN)">
+                    <ProFormTextArea
+                        label="文章标题(EN)"
+                        placeholder={'please enter title'}
+                        width={800}
+                        name="title_en"
+                    />
+                    <ProFormTextArea
+                        label="文章简介(EN)"
+                        placeholder={'place enter summary'}
+                        width={800}
+                        name="summary_en"
+                    />
+                    <div className="text-editor tw-w-full">
+                        {/* <CustomToolbar /> */}
+                        <ReactQuill
+                            theme="snow"
+                            value={descriptionEn}
+                            modules={modules}
+                            onChange={setDescriptionEn}
+                            className="ReactQuill w-full"
+                        />
+                    </div>
+                    {/* <ProFormText
+                disabled
+                initialValue={username?username:JSON.parse(string).username}
+                width={800}
+                name="author"
+                label="作者"
+                placeholder="请输入作者"
+            /> */}
+                </ProFormGroup>
+            </div>
