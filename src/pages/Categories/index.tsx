@@ -6,21 +6,25 @@ import {
     PageContainer,
     ProDescriptions,
     ProFormText,
-    ProFormTextArea,
     ProFormGroup,
     ProTable,
     ProFormSelect,
-    ProFormDigit
+    ProFormDigit,
 } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
 import { Button, Drawer, message } from 'antd';
 import React, { useRef, useState } from 'react';
 
-import { addRule, removeRule, rule, updateRule } from '@/services/ant-design-pro/api';
+import { updateRule } from '@/services/ant-design-pro/api';
+
+import {
+    CategoryManageControllerValue,
+    CategoryManageControllerValue_3,
+    CategoryManageControllerValue_2,
+} from '@/services/manage/fenleiguanli';
 
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
-import { CategoryManageControllerValue,CategoryManageControllerValue_3,CategoryManageControllerValue_2 } from '@/services/manage/fenleiguanli';
 
 /**
  * @en-US Add node
@@ -72,12 +76,12 @@ const handleUpdate = async (fields: FormValueType) => {
  *
  * @param selectedRows
  */
-const handleRemove = async (selectedRows:any) => {
+const handleRemove = async (selectedRows: any) => {
     const hide = message.loading('正在删除');
     if (!selectedRows) return true;
     try {
         await CategoryManageControllerValue_3({
-            items:[selectedRows.id]
+            items: [selectedRows.id],
         });
         hide();
         message.success('Deleted successfully and will refresh soon');
@@ -149,11 +153,12 @@ const TableList: React.FC = () => {
                         defaultMessage="Configuration"
                     />
                 </a>,
-                <a onClick={()=>{handleRemove(record)}}>
-                    <FormattedMessage
-                        id="删除"
-                        defaultMessage="删除"
-                    />
+                <a
+                    onClick={() => {
+                        handleRemove(record);
+                    }}
+                >
+                    <FormattedMessage id="删除" defaultMessage="删除" />
                 </a>,
             ],
         },
@@ -267,7 +272,7 @@ const TableList: React.FC = () => {
                     <ProFormText width="md" name="name" />
                 </ProFormGroup>
                 <ProFormGroup title="分类排序权重">
-                    <ProFormDigit  width="md"  name="customOrder" />
+                    <ProFormDigit width="md" name="customOrder" />
                 </ProFormGroup>
                 {/* <ProFormTextArea width="md" name="desc" /> */}
                 <ProFormGroup title="父级分类">

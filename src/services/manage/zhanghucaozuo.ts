@@ -81,9 +81,12 @@ export async function AuthControllerLogout(options?: { [key: string]: any }) {
 }
 
 /** 查询账户信息(只有用户自己才能查询) GET /api/manage/auth/profile */
-export async function AuthControllerProfile(options?: { [key: string]: any }) {
-  return request<any>('/api/manage/account/profile', {
+export async function AuthControllerProfile(options?: { [key: string]: any }, headers?: { [key: string]: string }) {
+  return request('/api/manage/account/profile', {
     method: 'GET',
+    headers: {
+      ...(headers || {}),
+    },
     ...(options || {}),
   });
 }

@@ -4,8 +4,11 @@ import { SettingDrawer } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link, RequestConfig } from '@umijs/max';
 import React from 'react';
+
 import RightContent from '@/components/RightContent';
+
 import defaultSettings from '../config/defaultSettings';
+
 import { errorConfig } from './requestErrorConfig';
 import { AuthControllerProfile } from './services/manage/zhanghucaozuo';
 
@@ -36,7 +39,7 @@ export async function getInitialState(): Promise<{
     const { location } = history;
     if (location.pathname !== loginPath) {
         const currentUser = await fetchUserInfo();
-        localStorage.setItem('currentUser',JSON.stringify(currentUser))
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
         return {
             fetchUserInfo,
             currentUser,
@@ -125,5 +128,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const request: RequestConfig = {
+    baseURL: `${SITE_URL}`,
     ...errorConfig,
 };

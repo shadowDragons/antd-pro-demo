@@ -110,9 +110,7 @@ export default defineConfig({
      * @description 它基于 axios 和 ahooks 的 useRequest 提供了一套统一的网络请求和错误处理方案。
      * @doc https://umijs.org/docs/max/request
      */
-    request: {
-       
-    },
+    request: {},
     /**
      * @name 权限插件
      * @description 基于 initialState 的权限插件，必须先打开 initialState
@@ -129,14 +127,14 @@ export default defineConfig({
     openAPI: [
         {
             requestLibPath: "import { request } from '@umijs/max'",
-            schemaPath: 'http://127.0.0.1:3200/api/docs-json',
+            schemaPath: 'http://127.0.0.1:3102/api/docs-json',
             mock: false,
             projectName: 'app',
         },
 
         {
             requestLibPath: "import { request } from '@umijs/max'",
-            schemaPath: 'http://127.0.0.1:3200/api/docs/manage-json',
+            schemaPath: 'http://127.0.0.1:3102/api/docs/manage-json',
             mock: false,
             projectName: 'manage',
         },

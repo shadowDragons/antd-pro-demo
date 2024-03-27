@@ -21,13 +21,8 @@ export default [
                 component: './Auth/Login',
             },
         ],
+        component: './Auth/Login',
     },
-    // {
-    //     name: 'setting',
-    //     icon: 'SettingOutlined',
-    //     path: '/setting',
-    //     component: './Setting',
-    // },
     {
         name: 'swiper',
         icon: 'SettingOutlined',
@@ -52,12 +47,12 @@ export default [
             {
                 path: '/posts/add',
                 component: './Posts/Add',
-                hideChildrenInMenu:true 
+                hideChildrenInMenu: true,
             },
             {
                 path: '/posts/edit',
                 component: './Posts/Edit',
-                hideChildrenInMenu:true 
+                hideChildrenInMenu: true,
             },
         ],
     },

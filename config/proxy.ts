@@ -12,7 +12,7 @@
 export default {
     dev: {
         '/api/': {
-            target: 'http://localhost:3001/api/',
+            target: 'http://localhost:3102/api/',
             changeOrigin: true,
         },
     },
@@ -22,7 +22,7 @@ export default {
      */
     test: {
         '/api/': {
-            target: 'https://kuromi.3rcd.com/api/',
+            target: 'http://localhost:3102/api/',
             changeOrigin: true,
         },
         // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
@@ -34,7 +34,7 @@ export default {
     },
     user: {
         '/api/': {
-            target: 'https://kuromi.io/api/',
+            target: 'http://localhost:3102/api/',
             changeOrigin: true,
         },
     },

@@ -3,11 +3,10 @@ import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { FormattedMessage, history, SelectLang, useIntl, useModel, Helmet } from '@umijs/max';
 import { Alert, message } from 'antd';
-import {useUser} from "@/hooks/useUser"
-import React, { useState } from 'react';
-import { flushSync } from 'react-dom';
 
-import { AuthControllerLogin,AuthControllerProfile } from '@/services/manage/zhanghucaozuo';
+import React, { useState } from 'react';
+
+import { AuthControllerLogin, AuthControllerProfile } from '@/services/manage/zhanghucaozuo';
 
 import Settings from '../../../../config/defaultSettings';
 
@@ -50,7 +49,7 @@ const LoginMessage: React.FC<{
 
 const Login: React.FC = () => {
     const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
-    const { initialState, setInitialState } = useModel('@@initialState');
+    const { initialState, setInitialState } = useModel('@@initialstate') || {};
 
     const containerClassName = useEmotionCss(() => {
         return {
@@ -68,16 +67,21 @@ const Login: React.FC = () => {
     const intl = useIntl();
 
     const fetchUserInfo = async () => {
-        const userInfo = await AuthControllerProfile();
+        const token = localStorage.getItem('token');
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        };
+        const userInfo = await AuthControllerProfile(null, headers);
         if (userInfo) {
-            localStorage.setItem('currentUser',JSON.stringify(userInfo))
-            flushSync(() => {
-                setInitialState((s) => ({
-                    ...s,
-                    ...userInfo,
-                    currentUser: userInfo,
-                }));
-            });
+            localStorage.setItem('currentUser', JSON.stringify(userInfo));
+
+            // flushSync(() => {
+            //     setInitialState((s) => ({
+            //         ...s,
+            //         ...userInfo,
+            //         currentUser: userInfo,
+            //     }));
+            // });
         }
     };
 
@@ -86,7 +90,7 @@ const Login: React.FC = () => {
             // 登录
             const token = await AuthControllerLogin({ ...values });
             if (token) {
-               
+                localStorage.setItem('token', token.token);
                 const defaultLoginSuccessMessage = intl.formatMessage({
                     id: 'pages.login.success',
                     defaultMessage: '登录成功！',
@@ -99,14 +103,15 @@ const Login: React.FC = () => {
             }
             const defaultLoginFailureMessage = intl.formatMessage({
                 id: 'pages.login.failure',
-                defaultMessage: '登录失败，请重试！',
+                defaultMessage: '登录失败，请重试！123',
             });
             // 如果失败去设置用户错误信息
             // setUserLoginState('ERRor');
         } catch (error) {
+            console.log(error);
             const defaultLoginFailureMessage = intl.formatMessage({
                 id: 'pages.login.failure',
-                defaultMessage: '登录失败，请重试！',
+                defaultMessage: '登录失败，请重试！321',
             });
             message.error(defaultLoginFailureMessage);
         }
